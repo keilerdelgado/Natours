@@ -1,0 +1,102 @@
+.popup {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($color-black, .8);
+    z-index: 9999;
+    
+    //ocultamos el popup
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+
+    @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba($color-black, .3);
+    }
+
+    &__content {
+        @include center-vertical-horizontal;
+
+        width: 75%;
+        background-color: $color-white;
+        box-shadow: 0 2rem 4rem rgba($color-black, .2);
+        border-radius: 3px;
+        display: table;
+        overflow: hidden;
+
+        //para la animacion
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.25);//el translate no era necesario ya que estaba en el mixin pero como vamos a usar nuevamente el translate entonces estariamos sobre escribiendo el transform y perderiamos el de el mixin por eso debemos volver a escribirlo
+        transition: all .5s .2s; //con el segundo valor lo que le indicamos es un delay asi damos tiempo a que se forme el fondo oscuro
+    }
+
+    &__left {
+        width: 33.333333%;
+        display: table-cell;
+    }
+    &__right {
+        width: 66.666667%;
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+    }
+    &__img {
+        display: block;
+        width: 100%;
+    }
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        //automaticamente nos crea columnas y separa el texto en esas columnas manteniendo la misma altura entre las columnas, es nuevo en css3
+        column-count: 2;//cantidad de columnas
+        column-gap: 4rem; //default 1em
+        column-rule: 1px solid $color-grey-light-2;
+        -moz-column-count: 2;//cantidad de columnas
+        -moz-column-gap: 4rem; //default 1em
+        -moz-column-rule: 1px solid $color-grey-light-2;
+
+        //con este comando evitamos que las lineas se separen en los espacios por palabras sino que mas bien se usen guiones para separar y romper la linea
+        hyphens: auto; //funciona en nuevos buscadores
+        //para que funcione en algunos navegadores tenemos que colocar los siguientes
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+    }
+
+        //mostrar el popup
+        //como el popup esta oculto lo que hacemos es usar el anchor como target, es decir, un boton que en lugar de apuntar a una url apunta a un id (#id)
+        &:target {
+            opacity: 1;
+            visibility: visible
+        }
+    
+        //cuando se abre el popup entonces estilizamos el content, esto con el fin de animar el popup y que parezca que esta creciendo en lugar de solo aparecer, por ello le damos un valor inicial y le indicamos que cuando se abra (url#id) entonces va a tomar su tamaño todo el contenedor
+        &:target &__content {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        &__close {
+            &:link,
+            &:visited {
+                color: $color-grey-dark;
+                position: absolute;
+                top: 2.5rem;
+                right: 2.5rem;
+                font-size: 3rem;
+                text-decoration: none;
+                display: inline-block;
+                transition: all .2s;
+                line-height: 1;
+            }
+    
+            &:hover {
+                color: $color-primary;
+            }
+        }
+}

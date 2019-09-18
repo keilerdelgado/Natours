@@ -1,0 +1,106 @@
+.btn {
+    &,
+    &:link,
+    &:visited {
+            /* las pseudo clases link y visited son estados de los link, cuando no ha sido visitado (:link) es azul y cuando ha sido visitado (:visited) es violeta. Normalmente. Con este css estamos asignandole un estilo para que siempre se vea igual */
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;
+        border-radius: 10rem;
+        transition: all .2s;
+            /* otra forma de animar, (all) propiedades que han de ser animadas y el tiempo de la animacion (.2s), el transition se coloca siempre en el elemento que contiene el estilo inicial de la animacion */
+        position: relative;
+        font-size: $default-font-size;
+
+        //cambios para el elemento <button>
+        border: none;
+        cursor: pointer;
+    } 
+
+    &:hover {
+        transform: translateY(-0.03rem);
+        box-shadow: 0 1rem 2rem rgba($color-black, .2); /* x y blur color */
+
+        &::after {
+                /* con este hover al colocar el mouse encima del .btn le asignamos estilos al elemento :after */
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
+
+    &:active,
+    &:focus {
+        outline: none;
+        transform: translateY(-0.01rem);
+        box-shadow: 0 .5rem 1rem rgba($color-black, .2); /* x y blur color */
+    }
+
+    &--white {
+        background-color: $color-white;
+        color: $color-grey-dark;
+
+        &::after {
+            background-color: $color-white;
+        }
+    }
+
+    &--green {
+        background-color: $color-primary;
+        color: $color-white;
+
+        &::after {
+            background-color: $color-primary;
+        }
+    }
+    /* :AFTER este pseudo elemento crea un objeto despues del elemento al que apunta */
+    &:after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+            /* le damos una posicion absoluta para que se coloque detras del bojeto principal */
+        top: 0; /* con estas coordenadas alineamos los elementos */
+        left: 0;
+        z-index: -1; /* lo enviamos detras del elemento */
+        transition: all .4s;
+            /* este elemento es el que lleva la propiedad de transition porque es el elemento que tiene el estilo inicial de partida de la animacion, es decir los estilos iniciales */
+    }
+
+
+
+    &--animated {
+            /* lo animamos en una clase aparte ya que solo este boton tendra esta animacion */
+        animation: moveInBottom .5s ease-out .75s;
+            /* una forma de recortar lo que habiamos hecho anterior mente en una linea, name, duration, function, delay */
+        animation-fill-mode: backwards;
+            /*esta propiedad especifica el modo en que la animacion aplica los estilos, backwards aplica los valores definidos en el primer keyframe y lo mantendra durante el delay */
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color: $color-primary;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-primary;
+        padding: 3px;
+        transition: all .2s;
+    }
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black, .15);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        box-shadow: 0 .5rem 1rem rgba($color-black, .15);
+        transform: translateY(0);
+    }
+}

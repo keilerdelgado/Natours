@@ -1,0 +1,54 @@
+.header {
+    height: 85vh;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8), 
+        rgba($color-primary-dark, 0.8)),
+        url(../img/hero.jpg); 
+            /*to right corresponde a la direccion del degradado, tambien para que empiece en una exquina se puede indicar to bottom right para que vaya desde la esquina superior izquierda a la esquina inferior derecha*/
+    background-size: cover;
+    background-position: top; /*bottom, center, top*/
+    position: relative;
+    
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%); 
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%); 
+    /* x y,x y,x y,x y son las coordenadas de las cuatro esquinas en sentido de las agujas del reloj*/
+    height: 95vh;
+    }
+
+    @media only screen and  (min-resolution: 192dpi) and (min-width: 37.5em),
+            only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+            only screen and (min-width: 125em) {
+        background-image: linear-gradient(to right bottom,
+                rgba($color-primary-light, 0.8),
+                rgba($color-primary-dark, 0.8)),
+            url(../img/hero.jpg);
+    }
+
+    @include respond(phone){
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%); 
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%); 
+    }
+    
+    &__logo-box {
+        position: absolute; 
+            /* los elementos con posicion absoluta se alinean dependiendo del elemento con posicion relative mas proximo, normalmente es el parent */
+        top: 4rem;
+        left: 4rem;
+    }
+    
+    &__logo {
+        height: 3.5rem;
+    }
+    
+    &__text-box {
+        position: absolute;
+        top: 40%; /* centrar verticalmente */
+        left: 50%; /* centrar horizontalmente */
+        transform: translate(-50%, -50%);
+            /* con translate estamos desplazando el elemento al colocar valores en % estamos tomando como referencia el mismo objeto que estamos transformando, esta linea es necesaria ya que si no el contenido toma como referencia posicional la esquina superior izquierda, de esta forma la posicion que utiliza es el centro del elemento*/
+        text-align: center; 
+            /* para alinear al centro los elementos de texto dentro de la caja */
+    }
+}

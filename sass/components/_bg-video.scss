@@ -1,0 +1,18 @@
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: .15;
+    overflow: hidden;
+    //escondemos lo que se sale de la caja, en este caso el video
+
+    &__content {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        //con object fit le decimos que el objeto debe cubrir a todo el parent, manteiniendo su aspect ratio, lo que sobre del objeto sera cortado, si uso en lugar de cover FILL entonces si se modifica el aspect ratio
+    }
+}

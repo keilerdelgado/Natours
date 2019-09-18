@@ -1,0 +1,53 @@
+//cuando creamos mixins podemos crearlos simplemente y los llamamos con include pero adicionalmente podemos darle la posibilidad de que reciban atributos al momento de llamarlos y tambien que usen el contenido que se le asigna al momento de llamarlos, tal como se hizo con los media query mas abajo
+
+@mixin clearfix {
+    &::after{
+        content:"";
+        display: table;
+        clear: both;
+        //clear float left y clear float right
+    }
+}
+
+@mixin  center-vertical-horizontal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+// MEDIA QUERY MANAGER (RESPONSIVE)
+
+/*
+0 - 600px:          Phone
+600px - 900px:      Tablet portrait
+900px - 1200px:     Tablet Landscape
+1200px - 1800px:    Normal styles apply
+1800px + :          Big desktop
+
+$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+el orden en el que vamos modificando los mediaquery es el siguiente
+base + tipografia > general layout + grid > layouts paginas especificas > componentes
+*/
+
+//la unidad de medida mas efectiva para trabajar los mediaquerys son los ems
+//en este sitio con la configuracion actual 1em = 16px
+@mixin respond($breakpoint){
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) { @content }; //600px
+    }
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em) { @content }; //900px
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em) { @content }; //1200px
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content }; //1800px
+    }
+}

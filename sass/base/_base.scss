@@ -1,0 +1,50 @@
+//en este archivo van todos los comandos globales basicos
+
+*,
+*::after,
+*::before {
+        /* global reset */
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+        /* es considerado buenas practicas que el border box este en el body y luego forzar la herencia, ya que es mas facil hacer cambios en el box sizing si esta en el body, sobre todo cuando usamos algun plugin externo o algo similar */
+}
+
+/* propiedades root */
+html {
+    /* font-size: 10px; */
+    /* al establecer el font size en 10 es mucho mas facil para hacer calculos mentales al asignar las medidas en los siguientes comandos con unidades tipo rem*/
+    font-size: 62.5%; /* 1em = 16px * 62.5% = 10px = 1rem*/
+    /* como usar la unidad de pixels es una mala practica lo mejor es usar unidades relativas entonces usamos las nativas del browser, el default (si el cliente no lo ha cambiado) es de 16px, por ello usamos un % para que estimando ese valor obtengamos una medida relativa */
+    // a pesar de que es una propiedad de texto lo dejamos en este archivo base global ya que su uso es para tener una unidad relativa de medida para todos las demas propiedades que funcionan con em y rem
+
+    //RESPONSIVE
+    //debido a que se cumplen las condiciones de que la pantalla mas pequeña es mas grande que la siguiente mas grande el orden adecuado es poner primero las pantallas mas grandes y luego las mas pequeñas de esa forma cuando haya conflicto se va a resolver por cascada y quedara finalmente la mas pequeña
+    //en caso de que se este realizando un sitio mobile first, entonces el media query no seria max sino min por ello entonces seria necesario que las llamadas estuvieran en sentido inverso al siguiente:
+    // en resumen max-width entonces de mayor a menor
+    // min-width entonces de menor a mayor
+    @include respond(tab-land){
+        font-size: 56.25%; // 1 rem = 9px (1em = 16px = 16*56.25% = 9px)
+    }
+    @include respond(tab-port){
+        font-size: 50%; // 1 rem = 8px (1em = 16px = 16*50% = 8px)
+    }
+    @include respond(big-desktop){
+        font-size: 75%; // 1rem = 12px (1em = 16px = 16*75=12px)
+    }
+
+}
+
+body {
+    box-sizing: border-box;
+    padding: 3rem;
+
+    @include respond(tab-port){
+        padding: 0;
+    }
+}
+
+::selection {
+    background-color: $color-primary;
+    color: $color-white;
+}
